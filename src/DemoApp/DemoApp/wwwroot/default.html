@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script type="module">
+        import { h, Component, render } from 'https://unpkg.com/preact?module';
+        import htm from 'https://unpkg.com/htm?module';
+
+        // Initialize htm with Preact
+        const html = htm.bind(h);
+
+        class TodoForm extends Component {
+            state = { email: '', content: '', id: '', delivery: '' };
+
+
+            onSubmit = e => {
+                fetch('/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ to: this.state.email, content: this.state.content })
+                }).then(response => response.json()).then(a => {
+                    console.log(a);
+                    this.setState({ ...this.state, id: a.id, delivery: a.status });
+
+                }).catch(e => {
+                    alert(e);
+                });
+                e.preventDefault();
+                return false;
+            }
+
+            checkStatus = e => {
+                fetch(`/emailstatus/${this.state.id}`).then(response => response.json()).then(s => {
+                    this.setState({ ...this.state, delivery: s.status });
+                });
+            }
+
+            onEmailInput = e => {
+                this.setState({ ...this.state, email: e.target.value })
+            }
+
+            onInput = e => {
+
+                this.setState({ ...this.state, content: e.target.value })
+            }
+
+            render(_, { email, content, id, delivery }) {
+                return (
+                    html`
+                            <input type="text" value=${email} onInput=${this.onEmailInput} />
+                            <input type="text" value=${content} onInput=${this.onInput} />
+                            <p>You typed this value: ${email}</p>
+                            <p>You typed this value: ${content}</p>
+                            <p>message id ${id} </p>
+                            <p>delivery ${delivery} </p>
+                            <button type="button" onClick=${this.onSubmit}> Submit</button>
+                            <button type="button" onClick=${this.checkStatus}>Check Status</button>`
+                );
+            }
+        }
+
+
+        function App(props) {
+            return html`<h1>Hello ${props.name}!</h1>
+<${TodoForm}/>
+
+`;
+        }
+
+        render(html`<${App} name="World" />`, document.body);
+    </script>
+</body>
+</html>
