@@ -21,5 +21,5 @@ jobs:
         scope: subscription
         region: northeurope
         template: ./infrastructure/main.bicep
-        parameters: infrastructure/params.json appName=${{secrets.AZURE_APP_NAME}}
+        parameters: infrastructure/params.json
         failOnStdErr: false
