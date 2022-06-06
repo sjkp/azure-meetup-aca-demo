@@ -37,7 +37,7 @@ jobs:
       with:
         inlineScript: |
           echo "Creating resources"
-          az deployment sub create --location ${{ env.REGION}} --template-file /infrastructure/main.bicep --parameters /infrastructure/params.json --debug          
+          az deployment sub create --location ${{ env.REGION}} --template-file ./infrastructure/main.bicep --parameters ./infrastructure/params.json --debug          
   build:
     runs-on: ubuntu-latest
     needs: provision
