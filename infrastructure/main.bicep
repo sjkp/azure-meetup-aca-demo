@@ -11,6 +11,15 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 var storageAccountName = 'st${appName}'
 
+module acr './containerregistry.bicep' = {
+  scope: rg
+  name: 'acr'
+  params: {
+    appName: appName
+    location: location
+  }
+}
+
 module storage './storage.bicep' = {
   name: 'storage'
   params: {
