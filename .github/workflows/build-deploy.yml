@@ -15,7 +15,7 @@ env:
   # specify your preferred region
   REGION: northeurope
 
-  DOCKER_FILE: src/DemoApp/Dockerfile
+  DOCKER_FILE: src/DemoApp/DemoApp/Dockerfile
   DOCKER_IMAGE: demoapp 
 
 jobs:
