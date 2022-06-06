@@ -35,7 +35,7 @@ jobs:
     - name: Creating resources
       uses: azure/CLI@v1
       with:
-        inlineScript: >
+        inlineScript: |
           echo "Creating resources"
           az deployment sub create --location ${{ env.REGION}} --template-file /infrastructure/main.bicep --parameters /infrastructure/params.json --debug          
   build:
@@ -98,7 +98,7 @@ jobs:
     - name: Deploy Container Apps
       uses: azure/CLI@v1
       with:
-        inlineScript: >
+        inlineScript: |
           az containerapp registry set -n "container-app-sjkpmeetupdemo" -g ${{ env.RESOURCE_GROUP_NAME }} --server ${{ env.REGISTRY }}.azurecr.io
           echo "Updating container"
           az containerapp update -n "container-app-sjkpmeetupdemo" -g "${{ env.RESOURCE_GROUP_NAME }}" -i "${{ env.REGISTRY }}.azurecr.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
