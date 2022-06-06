@@ -99,7 +99,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: >
-          az containerapp registry set -n demoapp -g ${{ env.RESOURCE_GROUP_NAME }} --server ${{ env.REGISTRY }}.azurecr.io
+          az containerapp registry set -n "container-app-sjkpmeetupdemo" -g ${{ env.RESOURCE_GROUP_NAME }} --server ${{ env.REGISTRY }}.azurecr.io
           az containerapp update -n "container-app-sjkpmeetupdemo" -g ${{ env.RESOURCE_GROUP_NAME }} -i ${{ env.REGISTRY }}.azurecr.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
           
     - name: logout
