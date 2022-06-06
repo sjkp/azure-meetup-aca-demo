@@ -65,7 +65,7 @@ jobs:
     - name: Build image and push it to ACR
       uses: docker/build-push-action@v3
       with:
-        context: ./src/DemoApp
+        context: "{{defaultContext}}:src/DemoApp"
         push: true
         tags: ${{ env.REGISTRY }}.azurecr.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
         file: ${{ env.DOCKER_FILE }}
