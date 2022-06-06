@@ -22,7 +22,13 @@ app.UseDefaultFiles();
 
 app.UseStaticFiles();
 
-
+app.MapGet("/env", () =>
+{
+    return new
+    {
+        value = Environment.GetEnvironmentVariable("CurrentConfig")
+    };
+});
 
 app.MapPost("/send", async (Email e, EmailService es) =>
 {
