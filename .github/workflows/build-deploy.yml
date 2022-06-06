@@ -15,7 +15,7 @@ env:
   # specify your preferred region
   REGION: northeurope
 
-  DOCKER_FILE: src/DemoApp/DemoApp/Dockerfile
+  DOCKER_FILE: DemoApp/Dockerfile
   DOCKER_IMAGE: demoapp 
 
 jobs:
@@ -63,8 +63,9 @@ jobs:
         docker login -u 00000000-0000-0000-0000-000000000000 --password-stdin ${{ env.REGISTRY }}.azurecr.io <<< "$refresh_token"
 
     - name: Build image and push it to ACR
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
+        context: src/DemoApp
         push: true
         tags: ${{ env.REGISTRY }}.azurecr.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
         file: ${{ env.DOCKER_FILE }}
