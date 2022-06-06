@@ -27,7 +27,11 @@ param minReplicas int = 1
 @maxValue(25)
 param maxReplicas int = 1
 
+param registry string
 
+resource acr 'Microsoft.ContainerRegistry/registries@2021-09-01' existing = {
+  name: registry
+}
 
 resource env 'Microsoft.App/managedEnvironments@2022-03-01'= {
   name: 'containerapp-env-${name}'
@@ -61,7 +65,20 @@ resource containerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
           }
         ]
       }
-    }
+      secrets: [
+        {
+          name: 'container-registry-password'
+          value: acr.listCredentials().passwords[0].value
+        }
+      ]  
+      registries: [
+        {
+          server: registry
+          username: acr.listCredentials().username
+          passwordSecretRef: 'container-registry-password'
+        }
+      ]
+    }    
     template: {      
       containers: [
         {          

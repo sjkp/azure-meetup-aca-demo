@@ -54,10 +54,13 @@ module keyvault 'keyvault.bicep' = {
   }
 }
 
+
+
 module aca 'aca.bicep' = {
   scope: rg
   name: 'azurecontainer'
   params: {
+    registry: acr.outputs.name
     lawClientId: logs.outputs.clientId
     lawClientSecret: logs.outputs.clientSecret
     location: location
