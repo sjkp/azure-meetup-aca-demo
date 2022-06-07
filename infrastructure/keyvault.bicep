@@ -22,7 +22,7 @@ var accessPolicies = [for principalId in principalIds: {
 }]
 
 
-resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
+resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   location: location
   name: name
   properties: {
